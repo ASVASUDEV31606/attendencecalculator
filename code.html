@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Welcome Box Styling */
+        .welcome-box {
+            background: linear-gradient(to right, #9c6b84, #6b5b95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            max-width: 500px;
+        }
+
+        .welcome-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-box h1 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .welcome-box p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+
+        /* Calculator Container - Initially Hidden */
+        .container {
+            display: none;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            color: #9c6b84;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group label {
+            display: block;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+            font-style: italic;
+            font-size: 12px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #9c6b84, #6b5b95);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: opacity 0.3s ease;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(to right, #435d7d, #6b5b95);
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .form-group.active {
+            border: 2px solid #9c6b84;
+        }
+
+        /* Animation for container transition */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-box" onclick="showCalculator()">
+        <h1>KLU L-T-P-S Attendance Calculator</h1>
+        <p>Click here to calculate your attendance percentage</p>
+    </div>
+
+    <div class="container">
+        <h2>Attendance Calculator</h2>
+        <div class="subtitle">
+            Please input he following details to obtain your overall attendance for a specific subject.
+        </div>
+        <form id="attendanceForm">
+            <div class="form-group">
+                <label for="lecture">Lecture Classes (%)</label>
+                <input type="number" id="lecture" min="0" max="100" placeholder="Enter lecture percentage">
+            </div>
+            <div class="form-group">
+                <label for="tutorial">Tutorial Classes (%)</label>
+                <input type="number" id="tutorial" min="0" max="100" placeholder="Enter tutorial percentage">
+            </div>
+            <div class="form-group">
+                <label for="practical">Practical Classes (%)</label>
+                <input type="number" id="practical" min="0" max="100" placeholder="Enter practical percentage">
+            </div>
+            <div class="form-group">
+                <label for="skilling">Skilling Classes (%)</label>
+                <input type="number" id="skilling" min="0" max="100" placeholder="Enter skilling percentage">
+            </div>
+            <button type="button" onclick="calculateAttendance()">Calculate Attendance</button>
+        </form>
+        <div class="result" id="result">Your overall attendance will appear here.</div>
+    </div>
+
+    <script>
+        const WEIGHTS = {
+            lecture: 100,
+            tutorial: 25,
+            practical: 50,
+            skilling: 25
+        };
+
+        function calculateAttendance() {
+            const components = {
+                lecture: parseFloat(document.getElementById('lecture').value) || 0,
+                tutorial: parseFloat(document.getElementById('tutorial').value) || 0,
+                practical: parseFloat(document.getElementById('practical').value) || 0,
+                skilling: parseFloat(document.getElementById('skilling').value) || 0
+            };
+
+            const valid = validateInputs(components);
+            if (!valid) return;
+
+            const percentage = calculateWeightedAverage(components);
+            updateResultDisplay(percentage);
+        }
+
+        function validateInputs(components) {
+            for (const [key, value] of Object.entries(components)) {
+                if (value < 0 || value > 100) {
+                    alert(`${key.charAt(0).toUpperCase() + key.slice(1)} percentage must be between 0 and 100.`);
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function calculateWeightedAverage(components) {
+            let totalWeight = 0;
+            let weightedSum = 0;
+
+            for (const [key, value] of Object.entries(components)) {
+                if (value > 0) {
+                    totalWeight += WEIGHTS[key];
+                    weightedSum += value * WEIGHTS[key];
+                }
+            }
+
+            return totalWeight ? (weightedSum / totalWeight).toFixed(2) : 0;
+        }
+
+        function updateResultDisplay(percentage) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `Your overall attendance is ${percentage}%`;
+
+            resultDiv.className = 'result';
+            if (percentage >= 85) resultDiv.classList.add('excellent');
+            else if (percentage >= 75) resultDiv.classList.add('good');
+            else if (percentage >= 65) resultDiv.classList.add('average');
+            else resultDiv.classList.add('warning');
+        }
+
+        function showCalculator() {
+            document.querySelector('.welcome-box').style.display = 'none';
+            const calculator = document.querySelector('.container');
+            calculator.style.display = 'block';
+            calculator.classList.add('fade-in');
+        }
+    </script>
+</body>
+</html>
