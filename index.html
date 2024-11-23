@@ -3,6 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KLU L-T-P-S Attendance Calculator - Calculate your attendance percentage for Lecture, Tutorial, Practical, and Skilling components at KL University">
+    <meta name="keywords" content="KLU attendance calculator, KL University, LTPS calculator, lecture attendance, tutorial attendance, practical attendance, skilling attendance, KLU attendance percentage, KL University attendance system, college attendance calculator, engineering attendance calculator, KLU student tools, academic attendance tracker, KL University student portal, attendance percentage calculator">
+    <meta name="author" content="KL University">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="KLU L-T-P-S Attendance Calculator">
+    <meta property="og:description" content="Calculate your KLU attendance percentage across Lecture, Tutorial, Practical, and Skilling components easily">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="[Your-Website-URL]">
+    <meta property="og:image" content="[Your-Preview-Image-URL]">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KLU L-T-P-S Attendance Calculator">
+    <meta name="twitter:description" content="Calculate your KLU attendance percentage across Lecture, Tutorial, Practical, and Skilling components easily">
+    <meta name="twitter:image" content="[Your-Preview-Image-URL]">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="[Your-Website-URL]">
     <title>Attendance Calculator</title>
     <style>
         body {
@@ -70,35 +90,73 @@
             font-size: 14px;
         }
 
-        .form-group {
+        /* Form Layout Styles */
+        .form-row {
             margin-bottom: 20px;
-            background-color: #fff;
+        }
+
+        .form-group {
+            background-color: white;
+            padding: 20px;
             border-radius: 10px;
-            padding: 15px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
-        .form-group label {
+        .form-group > label {
+            display: block;
+            color: #666;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .input-field {
+            flex: 1;
+        }
+
+        .input-field label {
             display: block;
             color: #666;
             font-size: 14px;
             margin-bottom: 8px;
-            text-transform: uppercase;
         }
 
-        .form-group input {
+        .input-field input {
             width: 100%;
             padding: 12px;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             font-size: 14px;
             color: #333;
+            transition: border-color 0.3s ease;
         }
 
-        .form-group input::placeholder {
+        .input-field input:focus {
+            outline: none;
+            border-color: #9c6b84;
+        }
+
+        .input-field input::placeholder {
             color: #999;
-            font-style: italic;
             font-size: 12px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .input-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .form-group {
+                padding: 15px;
+            }
         }
 
         button {
@@ -156,88 +214,156 @@
     </div>
 
     <div class="container">
-        <h2>Attendance Calculator</h2>
+        <h2>KLU L-T-P-S Attendance Calculator</h2>
         <div class="subtitle">
-            Please input he following details to obtain your overall attendance for a specific subject.
+            Please input the following details to obtain your overall attendance for a specific subject.
         </div>
         <form id="attendanceForm">
-            <div class="form-group">
-                <label for="lecture">Lecture Classes (%)</label>
-                <input type="number" id="lecture" min="0" max="100" placeholder="Enter lecture percentage">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Lecture Classes</label>
+                    <div class="input-group">
+                        <div class="input-field">
+                            <label for="lectureTotal">Total Classes</label>
+                            <input type="number" id="lectureTotal" min="0" placeholder="Total lectures">
+                        </div>
+                        <div class="input-field">
+                            <label for="lectureAttended">Classes Attended</label>
+                            <input type="number" id="lectureAttended" min="0" placeholder="Lectures attended">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="tutorial">Tutorial Classes (%)</label>
-                <input type="number" id="tutorial" min="0" max="100" placeholder="Enter tutorial percentage">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Tutorial Classes</label>
+                    <div class="input-group">
+                        <div class="input-field">
+                            <label for="tutorialTotal">Total Classes</label>
+                            <input type="number" id="tutorialTotal" min="0" placeholder="Total tutorials">
+                        </div>
+                        <div class="input-field">
+                            <label for="tutorialAttended">Classes Attended</label>
+                            <input type="number" id="tutorialAttended" min="0" placeholder="Tutorials attended">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="practical">Practical Classes (%)</label>
-                <input type="number" id="practical" min="0" max="100" placeholder="Enter practical percentage">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Practical Classes</label>
+                    <div class="input-group">
+                        <div class="input-field">
+                            <label for="practicalTotal">Total Classes</label>
+                            <input type="number" id="practicalTotal" min="0" placeholder="Total practicals">
+                        </div>
+                        <div class="input-field">
+                            <label for="practicalAttended">Classes Attended</label>
+                            <input type="number" id="practicalAttended" min="0" placeholder="Practicals attended">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="skilling">Skilling Classes (%)</label>
-                <input type="number" id="skilling" min="0" max="100" placeholder="Enter skilling percentage">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Skilling Classes</label>
+                    <div class="input-group">
+                        <div class="input-field">
+                            <label for="skillingTotal">Total Classes</label>
+                            <input type="number" id="skillingTotal" min="0" placeholder="Total skilling">
+                        </div>
+                        <div class="input-field">
+                            <label for="skillingAttended">Classes Attended</label>
+                            <input type="number" id="skillingAttended" min="0" placeholder="Skilling attended">
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <button type="button" onclick="calculateAttendance()">Calculate Attendance</button>
         </form>
-        <div class="result" id="result">Your overall attendance will appear here.</div>
+        <div class="result" id="result">Your attendance details will appear here.</div>
     </div>
 
     <script>
-        const WEIGHTS = {
-            lecture: 100,
-            tutorial: 25,
-            practical: 50,
-            skilling: 25
-        };
-
         function calculateAttendance() {
+            // Get all input values
             const components = {
-                lecture: parseFloat(document.getElementById('lecture').value) || 0,
-                tutorial: parseFloat(document.getElementById('tutorial').value) || 0,
-                practical: parseFloat(document.getElementById('practical').value) || 0,
-                skilling: parseFloat(document.getElementById('skilling').value) || 0
+                lecture: {
+                    total: Number(document.getElementById('lectureTotal').value) || 0,
+                    attended: Number(document.getElementById('lectureAttended').value) || 0,
+                    weight: 100
+                },
+                tutorial: {
+                    total: Number(document.getElementById('tutorialTotal').value) || 0,
+                    attended: Number(document.getElementById('tutorialAttended').value) || 0,
+                    weight: 25
+                },
+                practical: {
+                    total: Number(document.getElementById('practicalTotal').value) || 0,
+                    attended: Number(document.getElementById('practicalAttended').value) || 0,
+                    weight: 50
+                },
+                skilling: {
+                    total: Number(document.getElementById('skillingTotal').value) || 0,
+                    attended: Number(document.getElementById('skillingAttended').value) || 0,
+                    weight: 25
+                }
             };
 
-            const valid = validateInputs(components);
-            if (!valid) return;
-
-            const percentage = calculateWeightedAverage(components);
-            updateResultDisplay(percentage);
-        }
-
-        function validateInputs(components) {
-            for (const [key, value] of Object.entries(components)) {
-                if (value < 0 || value > 100) {
-                    alert(`${key.charAt(0).toUpperCase() + key.slice(1)} percentage must be between 0 and 100.`);
-                    return false;
+            // Validate inputs
+            for (const [type, data] of Object.entries(components)) {
+                if (data.attended > data.total) {
+                    alert(`${type.charAt(0).toUpperCase() + type.slice(1)}: Attended classes cannot be more than total classes`);
+                    return;
+                }
+                if (data.attended < 0 || data.total < 0) {
+                    alert(`${type.charAt(0).toUpperCase() + type.slice(1)}: Please enter valid numbers`);
+                    return;
                 }
             }
-            return true;
-        }
 
-        function calculateWeightedAverage(components) {
+            // Calculate percentages
+            let totalWeightedPercentage = 0;
             let totalWeight = 0;
-            let weightedSum = 0;
+            const percentages = {};
 
-            for (const [key, value] of Object.entries(components)) {
-                if (value > 0) {
-                    totalWeight += WEIGHTS[key];
-                    weightedSum += value * WEIGHTS[key];
+            for (const [type, data] of Object.entries(components)) {
+                if (data.total > 0) {
+                    percentages[type] = (data.attended / data.total) * 100;
+                    totalWeightedPercentage += percentages[type] * data.weight;
+                    totalWeight += data.weight;
                 }
             }
 
-            return totalWeight ? (weightedSum / totalWeight).toFixed(2) : 0;
-        }
+            const overallPercentage = totalWeight > 0 ? totalWeightedPercentage / totalWeight : 0;
 
-        function updateResultDisplay(percentage) {
+            // Display results
             const resultDiv = document.getElementById('result');
-            resultDiv.textContent = `Your overall attendance is ${percentage}%`;
+            let resultHTML = '<strong>Attendance Report:</strong><br><br>';
 
-            resultDiv.className = 'result';
-            if (percentage >= 85) resultDiv.classList.add('excellent');
-            else if (percentage >= 75) resultDiv.classList.add('good');
-            else if (percentage >= 65) resultDiv.classList.add('average');
-            else resultDiv.classList.add('warning');
+            for (const [type, data] of Object.entries(components)) {
+                if (data.total > 0) {
+                    resultHTML += `${type.charAt(0).toUpperCase() + type.slice(1)} Classes: 
+                                  ${percentages[type].toFixed(2)}% 
+                                  (${data.attended}/${data.total} classes)<br>`;
+                }
+            }
+
+            resultHTML += `<br><strong>Overall Weighted Attendance: ${overallPercentage.toFixed(2)}%</strong>`;
+            resultDiv.innerHTML = resultHTML;
+
+            // Add color coding based on attendance percentage
+            if (overallPercentage >= 85) {
+                resultDiv.style.background = 'linear-gradient(to right, #28a745, #20c997)';
+            } else if (overallPercentage >= 75) {
+                resultDiv.style.background = 'linear-gradient(to right, #17a2b8, #138496)';
+            } else {
+                resultDiv.style.background = 'linear-gradient(to right, #dc3545, #c82333)';
+            }
         }
 
         function showCalculator() {
