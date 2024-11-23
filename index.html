@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta name="google-site-verification" content="zDF9xgdYV8f38K13ugKMQgvGEg0M7S7rrJKHrLOm8JY" />
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="KLU L-T-P-S Attendance Calculator - Calculate your attendance percentage for Lecture, Tutorial, Practical, and Skilling components at KL University">
@@ -22,6 +20,7 @@
     <meta name="twitter:title" content="KLU L-T-P-S Attendance Calculator">
     <meta name="twitter:description" content="Calculate your KLU attendance percentage across Lecture, Tutorial, Practical, and Skilling components easily">
     <meta name="twitter:image" content="[Your-Preview-Image-URL]">
+
     <!-- Canonical URL -->
     <link rel="canonical" href="[Your-Website-URL]">
     <title>Attendance Calculator</title>
@@ -35,10 +34,23 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        /* Welcome Boxes Container */
+        .welcome-boxes {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: stretch;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
         /* Welcome Box Styling */
         .welcome-box {
+            flex: 1;
             background: linear-gradient(to right, #9c6b84, #6b5b95);
             padding: 40px;
             border-radius: 15px;
@@ -47,6 +59,9 @@
             cursor: pointer;
             transition: all 0.3s ease;
             max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .welcome-box:hover {
@@ -66,15 +81,35 @@
             margin-bottom: 0;
         }
 
-        /* Calculator Container - Initially Hidden */
-        .container {
-            display: none;
+        /* Make both boxes exactly the same width */
+        .welcome-box:first-child,
+        .welcome-box:last-child {
+            flex: 1;
+            width: 100%;
+            min-height: 200px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .welcome-boxes {
+                flex-direction: column;
+            }
+            
+            .welcome-box {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Calculator Container Styling - for when calculators are shown */
+        .calculator-container {
             background-color: white;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 600px;
+            margin: 20px auto;
         }
 
         h2 {
@@ -97,9 +132,11 @@
         }
 
         .form-group {
-            background-color: white;
-            padding: 20px;
+            position: relative;
+            margin-bottom: 20px;
+            background-color: #fff;
             border-radius: 10px;
+            padding: 15px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
@@ -148,15 +185,49 @@
             font-size: 12px;
         }
 
+        /* Ensure input groups are consistent */
+        .input-group {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .input-field {
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Ensure both calculator forms have the same width for inputs */
+        #attendanceCalculator .input-field input,
+        #cgpaCalculator .input-field input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Ensure consistent button styling */
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        /* Ensure consistent result display */
+        .result {
+            width: 100%;
+            margin: 20px 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
-            .input-group {
+            .welcome-boxes {
                 flex-direction: column;
-                gap: 15px;
             }
             
-            .form-group {
-                padding: 15px;
+            .welcome-box {
+                width: 100%;
             }
         }
 
@@ -206,19 +277,207 @@
                 transform: translateY(0);
             }
         }
+
+        /* Calculator Container Styles */
+        .calculators-container {
+            display: none;
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .calculator-box {
+            flex: 1;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive layout */
+        @media (min-width: 768px) {
+            .calculators-container {
+                display: flex;
+                flex-direction: row;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .calculators-container {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        /* CGPA Calculator specific styles */
+        #subjectsContainer .form-group {
+            margin-bottom: 20px;
+        }
+
+        #cgpaForm button {
+            margin-top: 10px;
+        }
+
+        #cgpaForm button:first-of-type {
+            background: linear-gradient(to right, #6b5b95, #9c6b84);
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            background: transparent;
+            border: none;
+            color: #9c6b84;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: #6b5b95;
+        }
+
+        /* Subject header styling */
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            position: relative;
+            width: 100%;
+        }
+
+        .subject-header label {
+            font-weight: bold;
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Delete button styling */
+        .delete-button {
+            background: #e94560;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .delete-button:hover {
+            background: #dc3545;
+            transform: scale(1.05);
+        }
+
+        /* Animation for removing subjects */
+        .form-group {
+            transition: all 0.3s ease;
+        }
+
+        .form-group.removing {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: linear-gradient(to right, #9c6b84, #6b5b95);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive navbar */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="welcome-box" onclick="showCalculator()">
-        <h1>KLU L-T-P-S Attendance Calculator</h1>
-        <p>Click here to calculate your attendance percentage</p>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">KLU Calculators</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showHome()">Home</a></li>
+                <li><a href="#" onclick="showAttendanceCalculator()">Attendance Calculator</a></li>
+                <li><a href="#" onclick="showCGPACalculator()">CGPA Calculator</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Welcome Boxes -->
+    <div class="welcome-boxes" style="display: flex;">
+        <div class="welcome-box" onclick="showAttendanceCalculator()">
+            <h1>KLU L-T-P-S Attendance Calculator</h1>
+            <p>Click here to calculate your attendance percentage</p>
+        </div>
+        
+        <div class="welcome-box" onclick="showCGPACalculator()">
+            <h1>KLU CGPA Calculator</h1>
+            <p>Click here to calculate your CGPA</p>
+        </div>
     </div>
 
-    <div class="container">
+    <!-- Calculator Containers -->
+    <div id="attendanceCalculator" class="calculator-container" style="display: none;">
+        <button class="back-button" onclick="goBack()">← Back to Menu</button>
         <h2>KLU L-T-P-S Attendance Calculator</h2>
-        <div class="subtitle">
-            Please input the following details to obtain your overall attendance for a specific subject.
-        </div>
+        <div class="subtitle">Please input the following details to obtain your overall attendance.</div>
+        
         <form id="attendanceForm">
             <div class="form-row">
                 <div class="form-group">
@@ -289,7 +548,37 @@
         <div class="result" id="result">Your attendance details will appear here.</div>
     </div>
 
+    <div id="cgpaCalculator" class="calculator-container" style="display: none;">
+        <button class="back-button" onclick="goBack()">← Back to Menu</button>
+        <h2>KLU CGPA Calculator</h2>
+        <form id="cgpaForm">
+            <div id="subjectsContainer">
+                <div class="form-group" id="subject1Container">
+                    <div class="subject-header">
+                        <label>Subject</label>
+                        <button type="button" class="delete-button" onclick="deleteSubject(1)">Delete</button>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-field">
+                            <label for="subject1Credits">Credits</label>
+                            <input type="number" id="subject1Credits" placeholder="Enter credits" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="subject1Grade">Grade Points</label>
+                            <input type="number" id="subject1Grade" placeholder="Enter grade points" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" onclick="addSubject()">Add Another Subject</button>
+            <button type="button" onclick="calculateCGPA()">Calculate CGPA</button>
+        </form>
+        <div class="result" id="cgpaResult">Your CGPA will appear here.</div>
+    </div>
+
     <script>
+        let subjectCount = 1;
+
         function calculateAttendance() {
             // Get all input values
             const components = {
@@ -367,11 +656,106 @@
             }
         }
 
-        function showCalculator() {
-            document.querySelector('.welcome-box').style.display = 'none';
-            const calculator = document.querySelector('.container');
-            calculator.style.display = 'block';
-            calculator.classList.add('fade-in');
+        function addSubject() {
+            subjectCount++;
+            const container = document.getElementById('subjectsContainer');
+            const subjectHTML = `
+                <div class="form-group" id="subject${subjectCount}Container">
+                    <div class="subject-header">
+                        <label>Subject</label>
+                        <button type="button" class="delete-button" onclick="deleteSubject(${subjectCount})">Delete</button>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-field">
+                            <label for="subject${subjectCount}Credits">Credits</label>
+                            <input type="number" id="subject${subjectCount}Credits" placeholder="Enter credits" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="subject${subjectCount}Grade">Grade Points</label>
+                            <input type="number" id="subject${subjectCount}Grade" placeholder="Enter grade points" required>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', subjectHTML);
+        }
+
+        function deleteSubject(subjectNumber) {
+            if (subjectCount > 1) {
+                const subjectToDelete = document.getElementById(`subject${subjectNumber}Container`);
+                subjectToDelete.classList.add('removing');
+                setTimeout(() => {
+                    subjectToDelete.remove();
+                    subjectCount = document.querySelectorAll('.form-group').length;
+                }, 300);
+            } else {
+                alert("You must have at least one subject!");
+            }
+        }
+
+        function calculateCGPA() {
+            let totalCredits = 0;
+            let totalGradePoints = 0;
+
+            for (let i = 1; i <= subjectCount; i++) {
+                const credits = Number(document.getElementById(`subject${i}Credits`).value);
+                const gradePoints = Number(document.getElementById(`subject${i}Grade`).value);
+
+                if (isNaN(credits) || isNaN(gradePoints) || credits < 0 || gradePoints < 0) {
+                    alert(`Please enter valid values for Subject ${i}`);
+                    return;
+                }
+
+                totalCredits += credits;
+                totalGradePoints += credits * gradePoints;
+            }
+
+            if (totalCredits === 0) {
+                alert("Total credits cannot be zero.");
+                return;
+            }
+
+            const cgpa = (totalGradePoints / totalCredits).toFixed(2);
+            const resultDiv = document.getElementById('cgpaResult');
+            resultDiv.innerHTML = `<strong>Your CGPA is: ${cgpa}</strong>`;
+
+            // Color code the result
+            if (cgpa >= 9.0) {
+                resultDiv.style.background = 'linear-gradient(to right, #28a745, #20c997)';
+            } else if (cgpa >= 8.0) {
+                resultDiv.style.background = 'linear-gradient(to right, #17a2b8, #138496)';
+            } else {
+                resultDiv.style.background = 'linear-gradient(to right, #dc3545, #c82333)';
+            }
+        }
+
+        function showHome() {
+            // Show welcome boxes, hide calculators
+            document.querySelector('.welcome-boxes').style.display = 'flex';
+            document.getElementById('attendanceCalculator').style.display = 'none';
+            document.getElementById('cgpaCalculator').style.display = 'none';
+        }
+
+        function showAttendanceCalculator() {
+            // Hide welcome boxes and CGPA calculator, show attendance calculator
+            document.querySelector('.welcome-boxes').style.display = 'none';
+            document.getElementById('attendanceCalculator').style.display = 'block';
+            document.getElementById('cgpaCalculator').style.display = 'none';
+            document.getElementById('attendanceCalculator').classList.add('fade-in');
+        }
+
+        function showCGPACalculator() {
+            // Hide welcome boxes and attendance calculator, show CGPA calculator
+            document.querySelector('.welcome-boxes').style.display = 'none';
+            document.getElementById('attendanceCalculator').style.display = 'none';
+            document.getElementById('cgpaCalculator').style.display = 'block';
+            document.getElementById('cgpaCalculator').classList.add('fade-in');
+        }
+
+        // Remove or modify the existing goBack function since we now have the navbar
+        // If you want to keep the back button, update it to call showHome() instead
+        function goBack() {
+            showHome();
         }
     </script>
 </body>
